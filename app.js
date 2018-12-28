@@ -21,7 +21,8 @@ var mongoose = require('mongoose');
 //Set up default mongoose connection
 // var mongoDB = 'mongodb://172.17.0.3:27017/mydb'; //mongodb://<dbuser>:<dbpassword>@ds145184.mlab.com:45184/local_library_xmong
 //node populatedb mongodb://congxmong:kamejoko11@ds145184.mlab.com:45184/local_library_xmong
-var mongoDB = process.env.MONGODB_URI || 'mongodb://congxmong:kamejoko11@ds145184.mlab.com:45184/local_library_xmong';
+// var mongoDB = process.env.MONGODB_URI || 'mongodb://congxmong:kamejoko11@ds145184.mlab.com:45184/local_library_xmong';
+var mongoDB = 'mongodb://congxmong:kamejoko11@ds145184.mlab.com:45184/local_library_xmong';
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 // Get Mongoose to use the global promise library
 mongoose.Promise = global.Promise;
