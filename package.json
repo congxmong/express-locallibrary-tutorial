@@ -1,6 +1,9 @@
 {
   "name": "appliznet-backend",
   "version": "0.0.0",
+  "engines": {
+    "node": "10.14.2"
+  },
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
@@ -14,6 +17,7 @@
     "express-validator": "^5.3.1",
     "helmet": "^3.15.0",
     "http-errors": "~1.6.2",
+    "moment": "^2.23.0",
     "mongoose": "^5.4.0",
     "morgan": "~1.9.0",
     "pug": "2.0.0-beta11"
