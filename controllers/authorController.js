@@ -56,8 +56,8 @@ exports.author_create_get = function(req, res, next) {
 
 exports.author_create_post = [
     // Validate that all fields is not empty
-    body('first_name').isLength({ min: 1 }).trim().withMessage('First name must be specified.').isAlphanumeric().withMessage('First name has non-alphanumeric characters.'),
-    body('family_name').isLength({ min: 1 }).trim().withMessage('Family name must be specified.').isAlphanumeric().withMessage('Family name has non-alphanumeric characters.'),
+    body('first_name').isLength({ min: 1 }).trim().withMessage('First name must be specified.'),
+    body('family_name').isLength({ min: 1 }).trim().withMessage('Family name must be specified.'),
     body('date_of_birth', 'Invalid date of birth').optional({ checkFalsy: true }).isISO8601(),
     body('date_of_death', 'Invalid date of death').optional({ checkFalsy: true }).isISO8601(),
 
@@ -179,8 +179,8 @@ exports.author_update_get = function(req, res, next) {
 
 exports.author_update_post = [
     // Validate that all fields is not empty
-    body('first_name').isLength({ min: 1 }).trim().withMessage('First name must be specified.').isAlphanumeric().withMessage('First name has non-alphanumeric characters.'),
-    body('family_name').isLength({ min: 1 }).trim().withMessage('Family name must be specified.').isAlphanumeric().withMessage('Family name has non-alphanumeric characters.'),
+    body('first_name').isLength({ min: 1 }).trim().withMessage('First name must be specified.'),
+    body('family_name').isLength({ min: 1 }).trim().withMessage('Family name must be specified.'),
     body('date_of_birth', 'Invalid date of birth').optional({ checkFalsy: true }).isISO8601(),
     body('date_of_death', 'Invalid date of death').optional({ checkFalsy: true }).isISO8601(),
 
