@@ -14,7 +14,7 @@ block content
     dl
       each book in author_books
         dt 
-          a(href=book.url) #{book.title}
+          a(href=book.url) !{book.title}
           br
           if book.cover
             img(src=book.urlCover, alt="Book cover" height='100px')

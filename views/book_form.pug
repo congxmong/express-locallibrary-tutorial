@@ -33,7 +33,7 @@ block content
             label(for=genre._id) !{genre.name}
     div.form-group
       label(for='coverBook') Cover:
-      input#coverBook.form-control(type='file', placeholder='Book cover' name='coverBook' accept='image/*' required='true')
+      input#coverBook.form-control(type='file', placeholder='Book cover' name='coverBook' accept='image/*')
     button.btn.btn-primary(type='submit') Submit
 
   if errors 

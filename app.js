@@ -20,6 +20,7 @@ var mongoose = require('mongoose');
 
 //Set up default mongoose connection
 var mongoDB = 'mongodb://congxmong:kamejoko11@ds145184.mlab.com:45184/local_library_xmong';
+// var mongoDB = 'mongodb+srv://congxmong:kamejoko@congxmong-zusyt.mongodb.net/local_library?retryWrites=true';
 // var mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 // Get Mongoose to use the global promise library

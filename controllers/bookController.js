@@ -123,21 +123,33 @@ exports.book_create_post = [
         // Extract the validation errors from a request
         const errors = validationResult(req);
 
-        var img = fs.readFileSync(req.file.path);
-        var encode_image = img.toString('base64');
+        if(req.file != null){
+            var img = fs.readFileSync(req.file.path);
+            var encode_image = img.toString('base64');
 
-        // Create a book object with escaped and trimmed data
-        var book = new Book(
-            { 
-                title: req.body.title,
-                author: req.body.author,
-                summary: req.body.summary,
-                isbn: req.body.isbn,
-                genre: req.body.genre,
-                cover: new Buffer.from(encode_image, 'base64'),
-                typeCover: req.file.mimetype
-            }
-        );
+            // Create a book object with escaped and trimmed data
+            var book = new Book(
+                { 
+                    title: req.body.title,
+                    author: req.body.author,
+                    summary: req.body.summary,
+                    isbn: req.body.isbn,
+                    genre: req.body.genre,
+                    cover: new Buffer.from(encode_image, 'base64'),
+                    typeCover: req.file.mimetype
+                }
+            );
+        } else {
+            var book = new Book(
+                { 
+                    title: req.body.title,
+                    author: req.body.author,
+                    summary: req.body.summary,
+                    isbn: req.body.isbn,
+                    genre: req.body.genre
+                }
+            );
+        }
 
         if(!errors.isEmpty()){
             // There are errors. Render form again with sanitized values/error messages
@@ -298,22 +310,35 @@ exports.book_update_post = [
         //Extract the validation errors from a request
         const errors = validationResult(req);
 
-        var img = fs.readFileSync(req.file.path);
-        var encode_image = img.toString('base64');
+        if(req.file != null){
+            var img = fs.readFileSync(req.file.path);
+            var encode_image = img.toString('base64');
 
-        // create object with escaped/trimmed data and old id
-        var book = new Book(
-            {
-                title: req.body.title,
-                author: req.body.author,
-                summary: req.body.summary,
-                isbn: req.body.isbn,
-                genre: (typeof req.body.genre=='undefined') ? [] : req.body.genre,
-                cover: new Buffer.from(encode_image, 'base64'),
-                typeCover: req.file.mimetype,
-                _id: req.params.id,
-            }
-        );
+            // create object with escaped/trimmed data and old id
+            var book = new Book(
+                {
+                    title: req.body.title,
+                    author: req.body.author,
+                    summary: req.body.summary,
+                    isbn: req.body.isbn,
+                    genre: (typeof req.body.genre=='undefined') ? [] : req.body.genre,
+                    cover: new Buffer.from(encode_image, 'base64'),
+                    typeCover: req.file.mimetype,
+                    _id: req.params.id,
+                }
+            );
+        } else {
+            var book = new Book(
+                {
+                    title: req.body.title,
+                    author: req.body.author,
+                    summary: req.body.summary,
+                    isbn: req.body.isbn,
+                    genre: (typeof req.body.genre=='undefined') ? [] : req.body.genre,
+                    _id: req.params.id,
+                }
+            );
+        }
 
         if(!errors.isEmpty()){
             async.parallel({
