@@ -8,6 +8,10 @@ block content
       li
         a(href=book.url) !{book.title}
         |  (#{book.author.name})
+        
+        br
+        if book.cover
+          img(src=book.urlCover, alt="Book cover" height='100px')
         p !{book.summary}
 
     else

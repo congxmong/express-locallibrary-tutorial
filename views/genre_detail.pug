@@ -12,6 +12,9 @@ block content
     each book in genre_books
       dt 
         a(href=book.url) #{book.title}
+        br
+        if book.cover
+          img(src=book.urlCover, alt="Book cover" height='100px')
       dd #{book.summary}
 
     else

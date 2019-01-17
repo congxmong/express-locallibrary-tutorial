@@ -2,6 +2,8 @@ extends layout
 
 block content
   h1 #{title}: !{book.title}
+  if book.cover
+    img(src=book.urlCover, alt="Book cover" height='300px')
   
   p #[strong Author:] 
     a(href=book.author.url) #{book.author.name}

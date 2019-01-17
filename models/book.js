@@ -8,7 +8,9 @@ var BookSchema = new Schema(
     author: {type: Schema.Types.ObjectId, ref: 'Author', required: true},
     summary: {type: String, required: true},
     isbn: {type: String, required: true},
-    genre: [{type: Schema.Types.ObjectId, ref: 'Genre'}]
+    genre: [{type: Schema.Types.ObjectId, ref: 'Genre'}],
+    cover: Buffer,
+    typeCover: {type: String}
   }
 );
 
@@ -17,6 +19,12 @@ BookSchema
 .virtual('url')
 .get(function () {
   return '/catalog/book/' + this._id;
+});
+
+BookSchema
+.virtual('urlCover')
+.get(function () {
+  return '/catalog/book/' + this._id + '/cover';
 });
 
 //Export model

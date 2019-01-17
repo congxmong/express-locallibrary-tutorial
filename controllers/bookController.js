@@ -8,6 +8,8 @@ var async = require('async');
 const { body, validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 
+var fs = require('fs-extra');
+
 exports.index = function(req, res) {
     // res.send('NOT IMPLEMENTED: Site Home Page');
 
@@ -36,7 +38,8 @@ exports.index = function(req, res) {
 exports.book_list = function(req, res, next) {
     // res.send('NOT IMPLEMENTED: Book list');
 
-    Book.find({}, 'title author summary').populate('author').exec(function (err, list_books){
+    //Book.find({}, 'title author summary').populate('author').exec(function (err, list_books){
+    Book.find().populate('author').exec(function (err, list_books){
     	if(err){ return next(err);}
 
     	//successful, so render
@@ -120,6 +123,9 @@ exports.book_create_post = [
         // Extract the validation errors from a request
         const errors = validationResult(req);
 
+        var img = fs.readFileSync(req.file.path);
+        var encode_image = img.toString('base64');
+
         // Create a book object with escaped and trimmed data
         var book = new Book(
             { 
@@ -127,7 +133,9 @@ exports.book_create_post = [
                 author: req.body.author,
                 summary: req.body.summary,
                 isbn: req.body.isbn,
-                genre: req.body.genre
+                genre: req.body.genre,
+                cover: new Buffer.from(encode_image, 'base64'),
+                typeCover: req.file.mimetype
             }
         );
 
@@ -163,6 +171,7 @@ exports.book_create_post = [
                 res.redirect(book.url);
             });
         }
+        
     }
 ];
 
@@ -289,6 +298,9 @@ exports.book_update_post = [
         //Extract the validation errors from a request
         const errors = validationResult(req);
 
+        var img = fs.readFileSync(req.file.path);
+        var encode_image = img.toString('base64');
+
         // create object with escaped/trimmed data and old id
         var book = new Book(
             {
@@ -297,6 +309,8 @@ exports.book_update_post = [
                 summary: req.body.summary,
                 isbn: req.body.isbn,
                 genre: (typeof req.body.genre=='undefined') ? [] : req.body.genre,
+                cover: new Buffer.from(encode_image, 'base64'),
+                typeCover: req.file.mimetype,
                 _id: req.params.id,
             }
         );
@@ -333,3 +347,17 @@ exports.book_update_post = [
         }
     }
 ];
+
+// get book cover
+exports.book_cover = function(req, res, next){
+    async.parallel({
+        book: function(callback){
+            Book.findById(req.params.id).exec(callback);
+        },
+    }, function(err, results){
+        if(err){ return next(err); }
+
+        res.contentType(results.book.typeCover);
+        res.send(results.book.cover);
+    });
+};

@@ -7,6 +7,19 @@ var author_controller = require('../controllers/authorController');
 var genre_controller = require('../controllers/genreController');
 var book_instance_controller = require('../controllers/bookinstanceController');
 
+var multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/images');
+    },
+    filename: function (req, file, cb) {
+        // cb(null, file.originalname + '-' + Date.now());
+        cb(null, file.originalname);
+    }
+});
+
+var upload = multer({ storage: storage });
+
 /// BOOK ROUTES ///
 
 // GET catalog home page.
@@ -16,7 +29,7 @@ router.get('/', book_controller.index);
 router.get('/book/create', book_controller.book_create_get);
 
 // POST request for creating Book.
-router.post('/book/create', book_controller.book_create_post);
+router.post('/book/create', upload.single('coverBook'), book_controller.book_create_post);
 
 // GET request to delete Book.
 router.get('/book/:id/delete', book_controller.book_delete_get);
@@ -28,13 +41,16 @@ router.post('/book/:id/delete', book_controller.book_delete_post);
 router.get('/book/:id/update', book_controller.book_update_get);
 
 // POST request to update Book.
-router.post('/book/:id/update', book_controller.book_update_post);
+router.post('/book/:id/update', upload.single('coverBook'), book_controller.book_update_post);
 
 // GET request for one Book.
 router.get('/book/:id', book_controller.book_detail);
 
 // GET request for list of all Book items.
 router.get('/books', book_controller.book_list);
+
+// GET request for Book cover.
+router.get('/book/:id/cover', book_controller.book_cover);
 
 /// AUTHOR ROUTES ///
 
