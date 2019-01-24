@@ -49,6 +49,8 @@ router.get('/book/:id', book_controller.book_detail);
 // GET request for list of all Book items.
 router.get('/books', book_controller.book_list);
 
+router.get('/books/api', book_controller.book_list_api);
+
 // GET request for Book cover.
 router.get('/book/:id/cover', book_controller.book_cover);
 

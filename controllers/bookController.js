@@ -47,6 +47,17 @@ exports.book_list = function(req, res, next) {
     });
 };
 
+// Display api list of all books.
+exports.book_list_api = function(req, res, next) {
+    //Book.find({}, 'title author summary').populate('author').exec(function (err, list_books){
+    Book.find().populate('author').exec(function (err, list_books){
+        if(err){ return next(err);}
+
+        //successful, so render
+        res.json(list_books);
+    });
+};
+
 // Display detail page for a specific book.
 exports.book_detail = function(req, res, next) {
     // res.send('NOT IMPLEMENTED: Book detail: ' + req.params.id);
